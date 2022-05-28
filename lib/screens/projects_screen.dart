@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:momentum/models/project.dart';
 import 'package:momentum/providers/projects_provider.dart';
+import 'package:momentum/screens/add_project_screen.dart';
 import 'package:momentum/widgets/nav_button.dart';
 import 'package:momentum/widgets/projects_section.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +45,15 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 );
               }
             }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            AddProjectScreen.id,
+          );
+        },
       ),
     );
   }
