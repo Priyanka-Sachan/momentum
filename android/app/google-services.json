@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "159767665875",
+    "project_id": "momentum-d989d",
+    "storage_bucket": "momentum-d989d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159767665875:android:b24daae937af9b4cef0826",
+        "android_client_info": {
+          "package_name": "com.example.momentum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159767665875-fdhfta8vbj61udrfbqur2pc522cce0rs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmpb9RHOpCI1M5k01aFt2_jVWxTq9mOBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159767665875-fdhfta8vbj61udrfbqur2pc522cce0rs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
