@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:momentum/models/project.dart';
+import 'package:momentum/providers/projects_provider.dart';
 import 'package:momentum/widgets/nav_button.dart';
+import 'package:momentum/widgets/projects_section.dart';
+import 'package:provider/provider.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({Key? key}) : super(key: key);
@@ -24,9 +29,21 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         ],
       ),
       body: Container(
-        child: Center(
-          child: Text('PROJECTS'),
-        ),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: Provider.of<ProjectsProvider>(context, listen: true)
+                .getProjectsStream(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final projects = snapshot.data!.docs
+                    .map((e) => Project.fromSnapshot(e))
+                    .toList();
+                return ProjectsSection(projects: projects);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
       ),
     );
   }

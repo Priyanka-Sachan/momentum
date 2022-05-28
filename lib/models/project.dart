@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Project {
   String id;
   String title;
@@ -16,28 +18,31 @@ class Project {
       required this.progress,
       required this.tasks});
 
-  factory Project.fromJson(Map<String, dynamic> json) => _projectFromJson(json);
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+        id: json['id'] as String,
+        title: json['title'] as String,
+        description: json['description'] as String,
+        timeEstimated: json['timeEstimated'] as int,
+        timeTaken: json['timeTaken'] as int,
+        progress: json['progress'] as int,
+        tasks: (json['tasks'] as List<dynamic>).cast<String>());
+  }
 
-  Map<String, dynamic> toJson() => _projectToJson(this);
-}
-
-Project _projectFromJson(Map<String, dynamic> json) {
-  return Project(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      timeEstimated: json['timeEstimated'] as int,
-      timeTaken: json['timeTaken'] as int,
-      progress: json['progress'] as int,
-      tasks: (json['tasks'] as List<dynamic>).cast<String>());
-}
-
-Map<String, dynamic> _projectToJson(Project instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'description': instance.description,
-      'timeEstimated': instance.timeEstimated,
-      'timeTaken': instance.timeTaken,
-      'progress': instance.progress,
-      'tasks': instance.tasks
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'title': title,
+      'description': description,
+      'timeEstimated': timeEstimated,
+      'timeTaken': timeTaken,
+      'progress': progress,
+      'tasks': tasks
     };
+  }
+
+  factory Project.fromSnapshot(DocumentSnapshot snapshot) {
+    final project = Project.fromJson(snapshot.data() as Map<String, dynamic>);
+    return project;
+  }
+}
