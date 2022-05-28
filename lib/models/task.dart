@@ -38,6 +38,7 @@ class Task {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
+      'projectId':projectId,
       'title': title,
       'scheduledDateTime': scheduledDateTime,
       'intervalEstimated': intervalEstimated,

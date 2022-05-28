@@ -31,14 +31,14 @@ class Project {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'title': title,
-      'description': description,
-      'timeEstimated': timeEstimated,
-      'timeTaken': timeTaken,
-      'progress': progress,
-      'tasks': tasks
-    };
+        'id': id,
+        'title': title,
+        'description': description,
+        'timeEstimated': timeEstimated,
+        'timeTaken': timeTaken,
+        'progress': progress,
+        'tasks': tasks
+      };
   }
 
   factory Project.fromSnapshot(DocumentSnapshot snapshot) {

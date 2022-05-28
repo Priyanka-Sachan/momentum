@@ -17,8 +17,9 @@ class TasksProvider with ChangeNotifier {
   }
 
   void saveTask(String userId, Task task) {
+    task.id = '$userId@${DateTime.now()}';
     var taskJson = task.toJson();
-    collection.add(taskJson);
+    collection.doc(task.id).set(taskJson);
   }
 
   void updateTask(String userId, Task task) {

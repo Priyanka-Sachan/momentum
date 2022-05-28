@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:momentum/models/project.dart';
 import 'package:momentum/models/task.dart';
 import 'package:momentum/providers/tasks_provider.dart';
+import 'package:momentum/screens/add_task_screen.dart';
 import 'package:momentum/widgets/tasks_section.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,20 @@ class ProjectScreen extends StatelessWidget {
         children: [
           Text(project.title),
           Text(project.description),
+          Row(
+            children: [
+              Text('ALL'),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      AddTaskScreen.id,
+                      arguments: project.id,
+                    );
+                  },
+                  icon: Icon(Icons.add))
+            ],
+          ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
                 stream: Provider.of<TasksProvider>(context, listen: true)

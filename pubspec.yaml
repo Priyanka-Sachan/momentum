@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^1.6.0
   cloud_firestore: ^2.5.1
   provider: ^6.0.3
+  textfield_tags: 1.4.2
 
 dev_dependencies:
   flutter_test:

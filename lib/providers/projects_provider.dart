@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:momentum/models/project.dart';
 
 class ProjectsProvider with ChangeNotifier {
+  String uid='iNK2qbHd2orA4mSjjzN1';
   String _selectedId = '';
 
   String get selectedId => _selectedId;
@@ -17,8 +18,9 @@ class ProjectsProvider with ChangeNotifier {
   }
 
   void saveProject(String userId, Project project) {
+    project.id='$userId@${DateTime.now()}';
     var projectJson = project.toJson();
-    collection.add(projectJson);
+    collection.doc(project.id).set(projectJson);
   }
 
   void updateProject(String userId, Project project) {

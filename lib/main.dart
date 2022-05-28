@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:momentum/providers/projects_provider.dart';
 import 'package:momentum/providers/tasks_provider.dart';
 import 'package:momentum/screens/add_project_screen.dart';
+import 'package:momentum/screens/add_task_screen.dart';
 import 'package:momentum/screens/home_screen.dart';
 import 'package:momentum/screens/nav_screen.dart';
 import 'package:momentum/screens/project_screen.dart';
@@ -45,6 +46,7 @@ class _MomentumAppState extends State<MomentumApp> {
             ProjectsScreen.id: (context) => ProjectsScreen(),
             ProjectScreen.id: (context) => ProjectScreen(),
             AddProjectScreen.id: (context) => AddProjectScreen(),
+            AddTaskScreen.id: (context) => AddTaskScreen(),
             StatisticsScreen.id: (context) => StatisticsScreen(),
             NavScreen.id: (context) => NavScreen(),
           },
