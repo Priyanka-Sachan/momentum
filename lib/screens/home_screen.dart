@@ -26,7 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         child: Center(
-          child: Text('HOME'),
+          child: Column(
+            children: [
+              Text('Hi Sachan'),
+              Text('Let\'s check your tasks'),
+              Card(
+                child: Text('Overview of your work today...'),
+              ),
+            ],
+          ),
         ),
       ),
     );
