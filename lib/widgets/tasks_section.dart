@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:momentum/models/task.dart';
+import 'package:momentum/screens/task_screen.dart';
 
 class TasksSection extends StatelessWidget {
   final List<Task> tasks;
@@ -14,6 +15,9 @@ class TasksSection extends StatelessWidget {
         return ListTile(
           title: Text(tasks[i].title),
           subtitle: Text(tasks[i].intervalEstimated.toString()),
+          onTap: () {
+            Navigator.pushNamed(context, TaskScreen.id, arguments: tasks[i]);
+          },
         );
       },
     );

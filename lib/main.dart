@@ -9,6 +9,7 @@ import 'package:momentum/screens/nav_screen.dart';
 import 'package:momentum/screens/project_screen.dart';
 import 'package:momentum/screens/projects_screen.dart';
 import 'package:momentum/screens/statistics_screen.dart';
+import 'package:momentum/screens/task_screen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -47,6 +48,7 @@ class _MomentumAppState extends State<MomentumApp> {
             ProjectScreen.id: (context) => ProjectScreen(),
             AddProjectScreen.id: (context) => AddProjectScreen(),
             AddTaskScreen.id: (context) => AddTaskScreen(),
+            TaskScreen.id: (context) =>TaskScreen(),
             StatisticsScreen.id: (context) => StatisticsScreen(),
             NavScreen.id: (context) => NavScreen(),
           },
