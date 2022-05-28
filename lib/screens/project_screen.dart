@@ -1,45 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:momentum/models/project.dart';
 import 'package:momentum/models/task.dart';
 import 'package:momentum/providers/tasks_provider.dart';
-import 'package:momentum/widgets/nav_button.dart';
 import 'package:momentum/widgets/tasks_section.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-  static const id = '/';
+class ProjectScreen extends StatelessWidget {
+  static const id = '/project-screen';
+  const ProjectScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final project = ModalRoute.of(context)!.settings.arguments as Project;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        automaticallyImplyLeading: false,
         actionsIconTheme: IconThemeData(
           color: Colors.black,
         ),
-        actions: [
-          NavButton(),
-        ],
       ),
       body: Column(
         children: [
-          Text('Hi Sachan'),
-          Text('Let\'s check your tasks'),
-          Card(
-            child: Text('Overview of your work today...'),
-          ),
+          Text(project.title),
+          Text(project.description),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
                 stream: Provider.of<TasksProvider>(context, listen: true)
-                    .getTaskByDateStream(new DateTime.now()),
+                    .getTaskByProjectStream(project.id),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final tasks = snapshot.data!.docs

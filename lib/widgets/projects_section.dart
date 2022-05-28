@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:momentum/models/project.dart';
+import 'package:momentum/screens/project_screen.dart';
 
 class ProjectsSection extends StatelessWidget {
   final List<Project> projects;
@@ -14,6 +15,10 @@ class ProjectsSection extends StatelessWidget {
         return ListTile(
           title: Text(projects[i].title),
           subtitle: Text(projects[i].description),
+          onTap: () {
+            Navigator.pushNamed(context, ProjectScreen.id,
+                arguments: projects[i]);
+          },
         );
       },
     );

@@ -22,31 +22,34 @@ class Task {
       required this.tags,
       required this.sprints});
 
-  factory Task.fromJson(Map<String, dynamic> json) => _taskFromJson(json);
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+        id: json['id'] as String,
+        projectId: json['projectId'] as String,
+        title: json['title'] as String,
+        scheduledDateTime: (json['scheduledDateTime'] as Timestamp).toDate(),
+        intervalEstimated: json['intervalEstimated'] as int,
+        intervalTaken: json['intervalTaken'] as int,
+        progress: json['progress'] as int,
+        tags: (json['tags'] as List<dynamic>).cast<String>(),
+        sprints: (json['sprints'] as List<dynamic>).cast<String>());
+  }
 
-  Map<String, dynamic> toJson() => _taskToJson(this);
-}
-
-Task _taskFromJson(Map<String, dynamic> json) {
-  return Task(
-      id: json['id'] as String,
-      projectId: json['projectId'] as String,
-      title: json['title'] as String,
-      scheduledDateTime: (json['scheduledDateTime'] as Timestamp).toDate(),
-      intervalEstimated: json['intervalEstimated'] as int,
-      intervalTaken: json['intervalTaken'] as int,
-      progress: json['progress'] as int,
-      tags: (json['tags'] as List<dynamic>).cast<String>(),
-      sprints: (json['sprints'] as List<dynamic>).cast<String>());
-}
-
-Map<String, dynamic> _taskToJson(Task instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'scheduledDateTime': instance.scheduledDateTime,
-      'intervalEstimated': instance.intervalEstimated,
-      'intervalTaken': instance.intervalTaken,
-      'progress': instance.progress,
-      'tags': instance.tags,
-      'sprints': instance.sprints
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'title': title,
+      'scheduledDateTime': scheduledDateTime,
+      'intervalEstimated': intervalEstimated,
+      'intervalTaken': intervalTaken,
+      'progress': progress,
+      'tags': tags,
+      'sprints': sprints
     };
+  }
+
+  factory Task.fromSnapshot(DocumentSnapshot snapshot) {
+    final task = Task.fromJson(snapshot.data() as Map<String, dynamic>);
+    return task;
+  }
+}
