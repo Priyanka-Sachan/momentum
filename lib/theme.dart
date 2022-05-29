@@ -18,7 +18,7 @@ class MomentumTheme {
     return ThemeData(
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
-        primary: Colors.redAccent,
+        primary: Color(0xFFFF5252),
         secondary: Color(0xff0c1020),
       ),
       appBarTheme: const AppBarTheme(

@@ -4,6 +4,7 @@ import 'package:momentum/models/project.dart';
 import 'package:momentum/models/task.dart';
 import 'package:momentum/providers/tasks_provider.dart';
 import 'package:momentum/screens/add_task_screen.dart';
+import 'package:momentum/widgets/project_overview.dart';
 import 'package:momentum/widgets/tasks_section.dart';
 import 'package:provider/provider.dart';
 
@@ -20,68 +21,37 @@ class ProjectScreen extends StatelessWidget {
           project.title,
           style: Theme.of(context).textTheme.headline4,
         ),
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              project.description,
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      ' ALL ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      ' ACTIVE ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        AddTaskScreen.id,
-                        arguments: project,
-                      );
-                    },
-                    icon: const Icon(Icons.add))
-              ],
-            ),
-          ),
-          StreamBuilder<QuerySnapshot>(
-            stream: Provider.of<TasksProvider>(context, listen: true)
-                .getTaskByProjectStream(project.id),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final tasks = snapshot.data!.docs
-                    .map((e) => Task.fromSnapshot(e))
-                    .toList();
-                return TasksSection(tasks: tasks);
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AddTaskScreen.id,
+                  arguments: project,
                 );
-              }
-            },
-          ),
+              },
+              icon: const Icon(Icons.add))
         ],
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: Provider.of<TasksProvider>(context, listen: true)
+            .getTaskByProjectStream(project.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final tasks =
+                snapshot.data!.docs.map((e) => Task.fromSnapshot(e)).toList();
+            return ListView(
+              children: [
+                ProjectOverview(project: project, tasks: tasks),
+                TasksSection(tasks: tasks),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
