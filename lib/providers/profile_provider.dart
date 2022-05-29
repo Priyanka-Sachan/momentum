@@ -8,7 +8,7 @@ class ProfileProvider with ChangeNotifier {
       .collection('users')
       .doc('iNK2qbHd2orA4mSjjzN1');
 
-  String username = "";
+  String username = "Anonymous";
   String currentSprintId = "";
   String currentTaskId = "";
 

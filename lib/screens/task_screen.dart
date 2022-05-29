@@ -14,12 +14,13 @@ class TaskScreen extends StatelessWidget {
     final task = ModalRoute.of(context)!.settings.arguments as Task;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text(
+          task.title,
+          style: Theme.of(context).textTheme.headline3,
+        ),
       ),
       body: ListView(
         children: [
-          Text(task.title),
           ElevatedButton(
             child: Provider.of<ProfileProvider>(context, listen: false)
                     .currentSprintId
@@ -32,6 +33,10 @@ class TaskScreen extends StatelessWidget {
                   .saveSprint('iNK2qbHd2orA4mSjjzN1', task.id);
               Navigator.pushNamed(context, SprintScreen.id);
             },
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(CircleBorder()),
+              padding: MaterialStateProperty.all(EdgeInsets.all(8)),
+            ),
           )
         ],
       ),

@@ -24,47 +24,80 @@ class _SprintScreenState extends State<SprintScreen> {
     String currentTaskId =
         Provider.of<ProfileProvider>(context, listen: true).currentTaskId;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      backgroundColor: Colors.redAccent,
+      appBar: AppBar(),
       body: currentSprintId.isNotEmpty
-          ? Container(
-              child: FutureBuilder(
-                future: Future.wait([
-                  Provider.of<SprintsProvider>(context, listen: false)
-                      .getSprint(currentSprintId),
-                  Provider.of<TasksProvider>(context, listen: false)
-                      .getTask(currentTaskId)
-                ]),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Something went wrong");
-                  }
-                  if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
-                  }
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    Sprint sprint = Sprint.fromSnapshot(snapshot.data![0]);
-                    Task task = Task.fromSnapshot(snapshot.data![1]);
-                    return ListTile(
-                        title: Text(task.title),
-                        subtitle: Text(sprint.startTimestamp.toString()));
-                  }
-                  return Text("loading");
-                },
-              ),
+          ? FutureBuilder(
+              future: Future.wait([
+                Provider.of<SprintsProvider>(context, listen: false)
+                    .getSprint(currentSprintId),
+                Provider.of<TasksProvider>(context, listen: false)
+                    .getTask(currentTaskId)
+              ]),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  Sprint sprint = Sprint.fromSnapshot(snapshot.data![0]);
+                  Task task = Task.fromSnapshot(snapshot.data![1]);
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListView(
+                      children: [
+                        Text(
+                          'YOU ARE ON FIRE',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              ?.copyWith(color: Colors.red.shade50),
+                        ),
+                        Text(
+                          task.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        Text(
+                            'Working since ${sprint.startTimestamp.toString()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5
+                                ?.copyWith(color: Colors.white))
+                      ],
+                    ),
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
             )
-          : Container(
-              child: ListView(
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('You are so free ... DO SOME WORK.'),
-                  OutlinedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, HomeScreen.id);
-                      },
-                      child: Text('Check some work'))
+                  Text(
+                    'You are so free ... DO SOME WORK.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, HomeScreen.id);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 48,
+                      child: Text('DO'),
+                    ),
+                  ),
                 ],
               ),
             ),

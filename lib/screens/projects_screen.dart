@@ -8,8 +8,9 @@ import 'package:momentum/widgets/projects_section.dart';
 import 'package:provider/provider.dart';
 
 class ProjectsScreen extends StatefulWidget {
-  const ProjectsScreen({Key? key}) : super(key: key);
   static const id = '/projects-screen';
+
+  const ProjectsScreen({Key? key}) : super(key: key);
 
   @override
   State<ProjectsScreen> createState() => _ProjectsScreenState();
@@ -20,34 +21,31 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actionsIconTheme: IconThemeData(
-          color: Colors.black,
+        title: Text(
+          'Projects',
+          style: Theme.of(context).textTheme.headline4,
         ),
         actions: [
           NavButton(),
         ],
       ),
-      body: Container(
-        child: StreamBuilder<QuerySnapshot>(
-            stream: Provider.of<ProjectsProvider>(context, listen: true)
-                .getProjectsStream(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final projects = snapshot.data!.docs
-                    .map((e) => Project.fromSnapshot(e))
-                    .toList();
-                return ProjectsSection(projects: projects);
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
-      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: Provider.of<ProjectsProvider>(context, listen: true)
+              .getProjectsStream(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final projects = snapshot.data!.docs
+                  .map((e) => Project.fromSnapshot(e))
+                  .toList();
+              return ProjectsSection(projects: projects);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.pushNamed(
             context,

@@ -16,46 +16,70 @@ class ProjectScreen extends StatelessWidget {
     final project = ModalRoute.of(context)!.settings.arguments as Project;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actionsIconTheme: IconThemeData(
-          color: Colors.black,
+        title: Text(
+          project.title,
+          style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Text(project.title),
-          Text(project.description),
-          Row(
-            children: [
-              Text('ALL'),
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AddTaskScreen.id,
-                      arguments: project.id,
-                    );
-                  },
-                  icon: Icon(Icons.add))
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              project.description,
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
           ),
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-                stream: Provider.of<TasksProvider>(context, listen: true)
-                    .getTaskByProjectStream(project.id),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final tasks = snapshot.data!.docs
-                        .map((e) => Task.fromSnapshot(e))
-                        .toList();
-                    return TasksSection(tasks: tasks);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      ' ALL ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      ' ACTIVE ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        AddTaskScreen.id,
+                        arguments: project,
+                      );
+                    },
+                    icon: const Icon(Icons.add))
+              ],
+            ),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: Provider.of<TasksProvider>(context, listen: true)
+                .getTaskByProjectStream(project.id),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final tasks = snapshot.data!.docs
+                    .map((e) => Task.fromSnapshot(e))
+                    .toList();
+                return TasksSection(tasks: tasks);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
         ],
       ),

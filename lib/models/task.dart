@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Task {
   String id;
   String projectId;
+  String projectTitle;
   String title;
   DateTime scheduledDateTime;
   int intervalEstimated;
@@ -14,6 +15,7 @@ class Task {
   Task(
       {required this.id,
       required this.projectId,
+      required this.projectTitle,
       required this.title,
       required this.scheduledDateTime,
       required this.intervalEstimated,
@@ -26,6 +28,7 @@ class Task {
     return Task(
         id: json['id'] as String,
         projectId: json['projectId'] as String,
+        projectTitle: json['projectTitle'] as String,
         title: json['title'] as String,
         scheduledDateTime: (json['scheduledDateTime'] as Timestamp).toDate(),
         intervalEstimated: json['intervalEstimated'] as int,
@@ -38,7 +41,8 @@ class Task {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
-      'projectId':projectId,
+      'projectId': projectId,
+      'projectTitle': projectTitle,
       'title': title,
       'scheduledDateTime': scheduledDateTime,
       'intervalEstimated': intervalEstimated,

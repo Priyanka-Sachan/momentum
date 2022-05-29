@@ -4,8 +4,9 @@ import 'package:momentum/providers/projects_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddProjectScreen extends StatefulWidget {
-  const AddProjectScreen({Key? key}) : super(key: key);
   static const id = '/add-project-screen';
+
+  const AddProjectScreen({Key? key}) : super(key: key);
 
   @override
   State<AddProjectScreen> createState() => _AddProjectScreenState();
@@ -61,6 +62,10 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Add project',
+          style: Theme.of(context).textTheme.headline3,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
@@ -68,28 +73,29 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           ),
         ],
       ),
-      body: Form(
-        child: ListView(
-          children: [
-            TextFormField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                hintText: 'Title',
-                border: OutlineInputBorder(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          child: ListView(
+            children: [
+              TextFormField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  hintText: 'Title',
+                ),
               ),
-            ),
-            TextFormField(
-              controller: _descriptionController,
-              keyboardType: TextInputType.multiline,
-              minLines: 4,
-              maxLines: null,
-              textAlignVertical: TextAlignVertical.top,
-              decoration: InputDecoration(
-                hintText: 'Description',
-                border: OutlineInputBorder(),
+              TextFormField(
+                controller: _descriptionController,
+                keyboardType: TextInputType.multiline,
+                minLines: 4,
+                maxLines: null,
+                textAlignVertical: TextAlignVertical.top,
+                decoration: InputDecoration(
+                  hintText: 'Description',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

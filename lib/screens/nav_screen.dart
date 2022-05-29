@@ -5,8 +5,8 @@ import 'package:momentum/screens/sprint_screen.dart';
 import 'package:momentum/screens/statistics_screen.dart';
 
 class NavScreen extends StatefulWidget {
-  const NavScreen({Key? key}) : super(key: key);
   static const id = '/nav-screen';
+  const NavScreen({Key? key}) : super(key: key);
 
   @override
   State<NavScreen> createState() => _NavScreenState();
@@ -17,26 +17,28 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.close_rounded,
-              color: Colors.redAccent,
             ),
           ),
         ],
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              child: Text('HOME'),
+              child: Text(
+                'HOME',
+                style: Theme.of(context).textTheme.headline1,
+              ),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -45,7 +47,8 @@ class _NavScreenState extends State<NavScreen> {
               },
             ),
             InkWell(
-              child: Text('PROJECTS'),
+              child: Text('PROJECTS',
+                  style: Theme.of(context).textTheme.headline1),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -54,7 +57,8 @@ class _NavScreenState extends State<NavScreen> {
               },
             ),
             InkWell(
-              child: Text('STATISTICS'),
+              child: Text('STATISTICS',
+                  style: Theme.of(context).textTheme.headline1),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
@@ -63,7 +67,8 @@ class _NavScreenState extends State<NavScreen> {
               },
             ),
             InkWell(
-              child: Text('SPRINT'),
+              child: Text('SPRINT',
+                  style: Theme.of(context).textTheme.headline1),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,
