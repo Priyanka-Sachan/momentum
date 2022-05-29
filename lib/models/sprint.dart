@@ -12,22 +12,25 @@ class Sprint {
       required this.startTimestamp,
       required this.endTimestamp});
 
-  factory Sprint.fromJson(Map<String, dynamic> json) => _sprintFromJson(json);
+  factory Sprint.fromJson(Map<String, dynamic> json) {
+    return Sprint(
+        id: json['id'] as String,
+        taskId: json['taskId'] as String,
+        startTimestamp: (json['startTimestamp'] as Timestamp).toDate(),
+        endTimestamp: (json['endTimestamp'] as Timestamp).toDate());
+  }
 
-  Map<String, dynamic> toJson() => _sprintToJson(this);
-}
-
-Sprint _sprintFromJson(Map<String, dynamic> json) {
-  return Sprint(
-      id: json['id'] as String,
-      taskId: json['taskId'] as String,
-      startTimestamp: (json['startTimestamp'] as Timestamp).toDate(),
-      endTimestamp: (json['endTimestamp'] as Timestamp).toDate());
-}
-
-Map<String, dynamic> _sprintToJson(Sprint instance) => <String, dynamic>{
-      'id': instance.id,
-      'taskId': instance.taskId,
-      'startTimestamp': instance.startTimestamp,
-      'endTimestamp': instance.endTimestamp
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'taskId': taskId,
+      'startTimestamp': startTimestamp,
+      'endTimestamp': endTimestamp
     };
+  }
+
+  factory Sprint.fromSnapshot(DocumentSnapshot snapshot) {
+    final sprint = Sprint.fromJson(snapshot.data() as Map<String, dynamic>);
+    return sprint;
+  }
+}

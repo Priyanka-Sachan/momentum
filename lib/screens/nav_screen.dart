@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:momentum/screens/home_screen.dart';
 import 'package:momentum/screens/projects_screen.dart';
+import 'package:momentum/screens/sprint_screen.dart';
 import 'package:momentum/screens/statistics_screen.dart';
 
 class NavScreen extends StatefulWidget {
@@ -58,6 +59,15 @@ class _NavScreenState extends State<NavScreen> {
                 Navigator.pushReplacementNamed(
                   context,
                   StatisticsScreen.id,
+                );
+              },
+            ),
+            InkWell(
+              child: Text('SPRINT'),
+              onTap: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  SprintScreen.id,
                 );
               },
             ),

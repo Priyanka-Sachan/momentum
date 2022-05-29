@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:momentum/models/task.dart';
+import 'package:momentum/providers/profile_provider.dart';
+import 'package:momentum/providers/sprints_provider.dart';
+import 'package:momentum/screens/sprint_screen.dart';
+import 'package:provider/provider.dart';
 
 class TaskScreen extends StatelessWidget {
   static const id = '/task-screen';
@@ -17,9 +21,16 @@ class TaskScreen extends StatelessWidget {
         children: [
           Text(task.title),
           ElevatedButton(
-            child: Text('RUN'),
+            child: Provider.of<ProfileProvider>(context, listen: false)
+                    .currentSprintId
+                    .isEmpty
+                ? Text('RUN')
+                : Text('YOU ARE BUSY'),
             onPressed: () {
               // Start a sprint
+              Provider.of<SprintsProvider>(context, listen: false)
+                  .saveSprint('iNK2qbHd2orA4mSjjzN1', task.id);
+              Navigator.pushNamed(context, SprintScreen.id);
             },
           )
         ],

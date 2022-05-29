@@ -32,7 +32,7 @@ class ProjectsProvider with ChangeNotifier {
     return collection.doc(id).snapshots();
   }
 
-  void addComment(String id, String taskPath) {
+  void addTask(String id, String taskPath) {
     collection.doc(id).update({
       'tasks': FieldValue.arrayUnion([taskPath])
     });

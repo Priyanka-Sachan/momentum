@@ -27,8 +27,12 @@ class TasksProvider with ChangeNotifier {
     collection.doc(taskJson['id']).set(task.toJson());
   }
 
-  Stream<DocumentSnapshot<Object?>> getTaskStream(String id) {
-    return collection.doc(id).snapshots();
+  // Stream<DocumentSnapshot<Object?>> getTaskStream(String id) {
+  //   return collection.doc(id).snapshots();
+  // }
+
+  Future<DocumentSnapshot<Object?>> getTask(String id) {
+    return collection.doc(id).get();
   }
 
   Stream<QuerySnapshot<Object?>> getTaskByProjectStream(String id) {
@@ -44,9 +48,9 @@ class TasksProvider with ChangeNotifier {
         .snapshots();
   }
 
-  void addComment(String id, String taskPath) {
+  void addSprint(String id, String sprintPath) {
     collection.doc(id).update({
-      'tasks': FieldValue.arrayUnion([taskPath])
+      'sprints': FieldValue.arrayUnion([sprintPath])
     });
   }
 
