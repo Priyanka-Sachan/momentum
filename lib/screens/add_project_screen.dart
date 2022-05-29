@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:momentum/models/project.dart';
 import 'package:momentum/providers/projects_provider.dart';
 import 'package:provider/provider.dart';
@@ -66,38 +67,40 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           'Add project',
           style: Theme.of(context).textTheme.headline3,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: saveProject,
-          ),
-        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  hintText: 'Title',
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            SvgPicture.asset('assets/illustrations/balloon.svg',
+                semanticsLabel: 'Project',
+                width: MediaQuery.of(context).size.width),
+            ListView(
+              children: [
+                SizedBox(height: 256),
+                TextFormField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    hintText: 'Title',
+                  ),
                 ),
-              ),
-              TextFormField(
-                controller: _descriptionController,
-                keyboardType: TextInputType.multiline,
-                minLines: 4,
-                maxLines: null,
-                textAlignVertical: TextAlignVertical.top,
-                decoration: InputDecoration(
-                  hintText: 'Description',
+                TextFormField(
+                  controller: _descriptionController,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 8,
+                  maxLines: null,
+                  textAlignVertical: TextAlignVertical.top,
+                  decoration: InputDecoration(
+                    hintText: 'Description',
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
+      floatingActionButton:
+          FloatingActionButton(onPressed: saveProject, child: Icon(Icons.add)),
     );
   }
 }
