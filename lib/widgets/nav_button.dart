@@ -15,7 +15,7 @@ class NavButton extends StatelessWidget {
         );
       },
       icon: Icon(
-        Icons.apps_rounded,
+        Icons.align_vertical_top_rounded,
         color: Colors.black,
       ),
     );
