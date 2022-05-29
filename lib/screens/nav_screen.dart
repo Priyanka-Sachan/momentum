@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:momentum/screens/calendar_screen.dart';
 import 'package:momentum/screens/home_screen.dart';
 import 'package:momentum/screens/projects_screen.dart';
 import 'package:momentum/screens/sprint_screen.dart';
@@ -78,6 +79,19 @@ class _NavScreenState extends State<NavScreen> {
                     Navigator.pushReplacementNamed(
                       context,
                       StatisticsScreen.id,
+                    );
+                  },
+                ),
+                InkWell(
+                  child: Text('CALENDAR',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          ?.copyWith(color: Colors.white)),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      CalendarScreen.id,
                     );
                   },
                 ),

@@ -6,6 +6,7 @@ import 'package:momentum/providers/sprints_provider.dart';
 import 'package:momentum/providers/tasks_provider.dart';
 import 'package:momentum/screens/add_project_screen.dart';
 import 'package:momentum/screens/add_task_screen.dart';
+import 'package:momentum/screens/calendar_screen.dart';
 import 'package:momentum/screens/home_screen.dart';
 import 'package:momentum/screens/nav_screen.dart';
 import 'package:momentum/screens/project_screen.dart';
@@ -63,6 +64,7 @@ class _MomentumAppState extends State<MomentumApp> {
             TaskScreen.id: (context) => TaskScreen(),
             SprintScreen.id: (context) => SprintScreen(),
             StatisticsScreen.id: (context) => StatisticsScreen(),
+            CalendarScreen.id: (context) => CalendarScreen(),
             NavScreen.id: (context) => NavScreen(),
           },
           initialRoute: HomeScreen.id,
