@@ -1,4 +1,6 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:momentum/models/project.dart';
 import 'package:momentum/models/task.dart';
 import 'package:momentum/providers/tasks_provider.dart';
@@ -6,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 class AddTaskScreen extends StatefulWidget {
-    static const id = '/add-task-screen';
+  static const id = '/add-task-screen';
 
   const AddTaskScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final _titleController = TextEditingController();
 
-  late Project _project ;
+  late Project _project;
   String _title = "";
   DateTime _scheduledDateTime = DateTime.now();
   int _intervalEstimated = 0;
@@ -83,7 +85,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       appBar: AppBar(
         title: Text(
           'Add task',
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headline4,
         ),
         actions: [
           IconButton(
@@ -94,82 +96,103 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  hintText: 'Title',
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            SvgPicture.asset('assets/illustrations/navigator.svg',
+                semanticsLabel: 'Wave',
+                width: MediaQuery.of(context).size.width),
+            ListView(
+              children: [
+                TextFormField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    hintText: 'Title',
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  InkWell(
-                    child: Text(_selectedDate,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Color(0xFF000000))),
-                    onTap: () {
-                      _selectDate(context);
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.calendar_today),
-                    tooltip: 'Tap to open date picker',
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                  ),
-                ],
-              ),
-              Slider(
-                value: _intervalEstimated.toDouble(),
-                min: 0,
-                max: 100,
-                label: _intervalEstimated.round().toString(),
-                onChanged: (value) {
-                  setState(() {
-                    _intervalEstimated = value.round();
-                  });
-                },
-              ),
-              TextFieldTags(
-                  initialTags: _tags,
-                  textSeparators: [','],
-                  textFieldStyler: TextFieldStyler(
-                      helperText: '',
-                      helperStyle:
-                          TextStyle(color: Theme.of(context).colorScheme.primary),
-                      textFieldBorder: InputBorder.none,
-                      textFieldFocusedBorder: InputBorder.none,
-                      textFieldDisabledBorder: InputBorder.none,
-                      textFieldEnabledBorder: InputBorder.none),
-                  tagsStyler: TagsStyler(
-                      tagPadding: const EdgeInsets.all(8.0),
-                      tagDecoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius:
-                              const BorderRadiusDirectional.all(Radius.circular(8))),
-                      tagCancelIcon: const Icon(Icons.cancel,
-                          size: 18.0, color: Colors.white)),
-                  onTag: (tag) {
-                    _tags.add(tag);
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Deadline',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                DatePicker(
+                  DateTime.now(),
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: Color(0xff0c1020),
+                  selectedTextColor: Colors.white,
+                  onDateChange: (date) {
+                    // New date selected
+                    setState(() {
+                      _scheduledDateTime = date;
+                    });
                   },
-                  onDelete: (tag) {
-                    _tags.remove(tag);
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Estimated Time',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                Text(
+                  'in minutes',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                Slider(
+                  value: _intervalEstimated.toDouble(),
+                  min: 0,
+                  max: 100,
+                  divisions: 10,
+                  label: '${_intervalEstimated.round()} minutes',
+                  onChanged: (value) {
+                    setState(() {
+                      _intervalEstimated = value.round();
+                    });
                   },
-                  validator: (tag) {
-                    if (tag.length > 16) {
-                      return "Hey that's too long";
-                    }
-                    if (_tags.contains(tag)) {
-                      return "Tag already added";
-                    }
-                    return null;
-                  }),
-            ],
-          ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextFieldTags(
+                    initialTags: _tags,
+                    textSeparators: [','],
+                    textFieldStyler: TextFieldStyler(
+                        hintText: 'Tag your tasks & then complete them',
+                        helperText: '',
+                        helperStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        textFieldBorder: InputBorder.none,
+                        textFieldFocusedBorder: InputBorder.none,
+                        textFieldDisabledBorder: InputBorder.none,
+                        textFieldEnabledBorder: InputBorder.none),
+                    tagsStyler: TagsStyler(
+                        tagPadding: const EdgeInsets.all(8.0),
+                        tagDecoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: const BorderRadiusDirectional.all(
+                                Radius.circular(8))),
+                        tagCancelIcon: const Icon(Icons.cancel,
+                            size: 18.0, color: Colors.white)),
+                    onTag: (tag) {
+                      _tags.add(tag);
+                    },
+                    onDelete: (tag) {
+                      _tags.remove(tag);
+                    },
+                    validator: (tag) {
+                      if (tag.length > 16) {
+                        return "Hey that's too long";
+                      }
+                      if (_tags.contains(tag)) {
+                        return "Tag already added";
+                      }
+                      return null;
+                    }),
+              ],
+            ),
+          ],
         ),
       ),
     );
